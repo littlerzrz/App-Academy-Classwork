@@ -1,16 +1,18 @@
-require_relative "piece"
+require_relative "pieces/piece"
 
 class Board
     def initialize
         @grid = Array.new(8) { Array.new(8) }
         place_init_pieces
     end
+
     def place_init_pieces
         (0..1).each do |i|
             (0..7).each do |j|
                 @grid[i][j] = Piece.new
             end
         end
+        
         (6..7).each do |i|
             (0..7).each do |j|
                 @grid[i][j] = Piece.new
@@ -30,12 +32,12 @@ class Board
 
         raise "Invalid Move" if self[start_pos] == nil || self[end_pos] != nil
             
-        self[end_pos],self[start_pos] = self[start_pos],self[end_pos]
-        p @grid
+        self[end_pos], self[start_pos] = self[start_pos], self[end_pos]
+        
     end
 
     def valid_pos?(pos)
-        return false if !pos.first.between?(0,7) || !pos.last.between?(0,7) || !@board[pos.first][pos.last].nil?
+        return false if !pos.first.between?(0,7) || !pos.last.between?(0,7) || !self[pos].nil?
         true
     end
 
@@ -43,8 +45,8 @@ class Board
     attr_reader :grid
 end
 
-a = Board.new
-a.move_piece([0, 1], [1, 1])
+# a = Board.new
+# a.move_piece([0, 1], [1, 1])
 # pos = [1,1]
 # p a[pos]
 # p a[pos] = 2
