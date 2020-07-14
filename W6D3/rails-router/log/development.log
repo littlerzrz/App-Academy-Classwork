@@ -3384,3 +3384,101 @@ Processing by ArtworksController#index as */*
 Completed 200 OK in 7ms (Views: 0.7ms | ActiveRecord: 1.8ms)
 
 
+Started GET "/users/2/artworks" for ::1 at 2020-07-14 16:12:28 +0800
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/Xinyi/.rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.4.3/lib/active_record/log_subscriber.rb:98
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"2"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+  [1m[36mArtwork Load (0.7ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" WHERE "artworks"."artist_id" = $1[0m  [["artist_id", 2]]
+  ↳ app/controllers/artworks_controller.rb:5
+  [1m[36mArtwork Load (2.5ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" INNER JOIN "artwork_shares" ON "artworks"."id" = "artwork_shares"."artwork_id" WHERE "artwork_shares"."viewer_id" = $1[0m  [["viewer_id", 2]]
+  ↳ app/controllers/artworks_controller.rb:5
+Completed 200 OK in 138ms (Views: 1.4ms | ActiveRecord: 19.7ms)
+
+
+Started GET "/users/1/artworks" for ::1 at 2020-07-14 16:12:34 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+  [1m[36mArtwork Load (2.7ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" WHERE "artworks"."artist_id" = $1[0m  [["artist_id", 1]]
+  ↳ app/controllers/artworks_controller.rb:5
+  [1m[36mArtwork Load (0.5ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" INNER JOIN "artwork_shares" ON "artworks"."id" = "artwork_shares"."artwork_id" WHERE "artwork_shares"."viewer_id" = $1[0m  [["viewer_id", 1]]
+  ↳ app/controllers/artworks_controller.rb:5
+Completed 200 OK in 9ms (Views: 0.4ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/users/4/artworks" for ::1 at 2020-07-14 16:12:44 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"4"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.0ms)
+
+
+  
+NoMethodError (undefined method `artworks' for nil:NilClass):
+  
+app/controllers/artworks_controller.rb:5:in `index'
+Started GET "/users/4/artworks" for ::1 at 2020-07-14 16:18:39 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"4"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 7.0ms)
+
+
+  
+NoMethodError (undefined method `errors' for nil:NilClass):
+  
+app/controllers/artworks_controller.rb:9:in `index'
+Started GET "/users/4/artworks" for ::1 at 2020-07-14 16:19:25 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"4"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+Completed 500 Internal Server Error in 205ms (ActiveRecord: 3.0ms)
+
+
+  
+NameError (undefined local variable or method `errors' for #<ArtworksController:0x00007faae7b29280>):
+  
+app/controllers/artworks_controller.rb:9:in `index'
+Started GET "/users/4/artworks" for ::1 at 2020-07-14 16:21:03 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"4"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 3.5ms)
+
+
+  
+NoMethodError (undefined method `artworks' for nil:NilClass):
+  
+app/controllers/artworks_controller.rb:5:in `index'
+Started DELETE "/users/4" for ::1 at 2020-07-14 16:22:00 +0800
+Processing by UsersController#destroy as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:30
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 7.8ms)
+
+
+  
+NoMethodError (undefined method `destroy' for nil:NilClass):
+  
+app/controllers/users_controller.rb:31:in `destroy'
+Started GET "/users/3/artworks" for ::1 at 2020-07-14 16:22:20 +0800
+Processing by ArtworksController#index as */*
+  Parameters: {"user_id"=>"3"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/artworks_controller.rb:4
+  [1m[36mArtwork Load (0.5ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" WHERE "artworks"."artist_id" = $1[0m  [["artist_id", 3]]
+  ↳ app/controllers/artworks_controller.rb:5
+  [1m[36mArtwork Load (1.3ms)[0m  [1m[34mSELECT "artworks".* FROM "artworks" INNER JOIN "artwork_shares" ON "artworks"."id" = "artwork_shares"."artwork_id" WHERE "artwork_shares"."viewer_id" = $1[0m  [["viewer_id", 3]]
+  ↳ app/controllers/artworks_controller.rb:5
+Completed 200 OK in 53ms (Views: 1.6ms | ActiveRecord: 20.0ms)
+
+

@@ -2,8 +2,10 @@ class ArtworksController < ApplicationController
     
     def index
         user = User.find_by_id(params[:user_id])
-        artworks = user.artworks + user.shared_artworks
+        artworks = (user.artworks + user.shared_artworks).uniq
+        
         render json: artworks
+        
     end
 
     def show

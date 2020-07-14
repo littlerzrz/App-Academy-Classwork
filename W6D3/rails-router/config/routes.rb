@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # put 'users/:id', to: 'users#update'
   # delete 'users/:id', to: 'users#destroy'
 
+  # users/1/artworks => artworks owned by 1 & shared by 1
+  # get 'users/:id/artworks'
   
   resources :users do 
       resources :artworks, only: [:index]
