@@ -8,26 +8,31 @@ class SessionsController < ApplicationController
         user = User.find_by_credentials(username, password)
 
         if user.nil?
-            flash.now[:alert] = "Username or password is invaild"
+            flash.now[:alert] = "Username or password is invaild!"
             render :new
         else
             user.reset_session_token!
-            session = user.session_token
-            redirect_to user_url(user)
+            session[:session_token] = user.session_token
+            redirect_to cats_url
         end
 
     end
 
     def destroy
-        redirect_to root_url, notice: "Logged Out!"
+        logout!
+        redirect_to new_session_url
     end
 
     private
     def user_params
         params.require(:user).permit(:user_name, :password)
     end
+
+
+
     
 end
+
 
 
 # rails g controller sessions new create login welcome 
