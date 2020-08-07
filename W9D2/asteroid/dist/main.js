@@ -104,7 +104,7 @@ eval("const Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\");\nc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\")\nconst Asteroid = __webpack_require__(/*! ./asteroid.js */ \"./src/asteroid.js\")\n\nGame.DIM_X = 800; \nGame.DIM_Y = 1000; \nGame.NUM_ASTEROIDS = 10;\n\nfunction Game(){\n    this.asteroids = [];  \n    this.addAsteroids();\n}\n\nGame.prototype.addAsteroids = function () {\n    for(i = 0; i < Game.NUM_ASTEROIDS; i ++) {\n        let new_pos = this.randomPosition();\n        let new_asteroid = new Asteroid({pos: new_pos});\n\n        this.asteroids.push(new_asteroid);\n    }\n}\n\nGame.prototype.randomPosition = function () {\n    return [Math.random() * Game.DIM_X, Math.random() * Game.DIM_Y]\n}\n\nGame.prototype.draw = function (ctx) {\n    ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);\n    this.asteroids.forEach((asteroid) => {\n        asteroid.draw(ctx);\n    })\n    console.log(this)\n}\n\nGame.prototype.moveObjects = function () {\n    this.asteroids.forEach((asteroid) => {\n        asteroid.move();\n    })\n}\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
+eval("const Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\")\nconst Asteroid = __webpack_require__(/*! ./asteroid.js */ \"./src/asteroid.js\")\n\nGame.DIM_X = 800; \nGame.DIM_Y = 1000; \nGame.NUM_ASTEROIDS = 10;\n\nfunction Game(){\n    this.asteroids = [];  \n    this.addAsteroids();\n}\n\nGame.prototype.addAsteroids = function () {\n    for(i = 0; i < Game.NUM_ASTEROIDS; i ++) {\n        let new_pos = this.randomPosition();\n        let new_asteroid = new Asteroid({pos: new_pos});\n\n        this.asteroids.push(new_asteroid);\n    }\n}\n\nGame.prototype.randomPosition = function () {\n    return [Math.random() * Game.DIM_X, Math.random() * Game.DIM_Y]\n}\n\nGame.prototype.draw = function (ctx) {\n    ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);\n    this.asteroids.forEach((asteroid) => {\n        asteroid.draw(ctx);\n    })\n}\n\nGame.prototype.moveObjects = function () {\n    this.asteroids.forEach((asteroid) => {\n        asteroid.move();\n    })\n}\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
 
 /***/ }),
 
@@ -115,7 +115,7 @@ eval("const Util = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\")\nco
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("function GameView(game,ctx) {\n    this.game = game;\n    this.ctx = ctx;\n}\n\n\n\nGameView.prototype.start = function() {\n    // let moveObjs = setInterval(this.game.moveObjects(), 20);\n    // let drawObjs = setInterval(this.game.draw(this.ctx), 20); \n    setInterval(alert('hello!'), 200)\n}\n\nmodule.exports = GameView;\n\n//# sourceURL=webpack:///./src/game_view.js?");
+eval("function GameView(game,ctx) {\n    this.game = game;\n    this.ctx = ctx;\n}\n\n\n\nGameView.prototype.start = function() {\n//     let obj = this;\n//     setInterval(function(){\n//         obj.render()\n//     }, 20);\n// }\n\n// GameView.prototype.render = function(){\n//     this.game.moveObjects();\n//     this.game.draw(this.ctx)\n// }\n    setInterval(function(){\n        this.game.moveObjects();\n        this.game.draw(this.ctx)\n    }.bind(this), 20)\n\n}\n\n\nmodule.exports = GameView;\n\n//# sourceURL=webpack:///./src/game_view.js?");
 
 /***/ }),
 
