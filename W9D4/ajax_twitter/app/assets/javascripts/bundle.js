@@ -86,12 +86,58 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/api_util.js":
+/*!******************************!*\
+  !*** ./frontend/api_util.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const APIUtil = {
+    
+    followUser: id => {
+        return $.ajax({
+            url: `/users/${id}/follow`,
+            method: 'post',
+            dataType:'json'
+        })
+    },
+
+    unfollowUser: id => {
+        return $.ajax({
+            url: `/users/${id}/follow`,
+            method: 'delete',
+            dataType: 'json'
+        })
+    },
+
+    searchUsers: queryVal => {
+        return $.ajax({
+            url: `/users/search`,
+            method: 'GET',
+            dataType: 'json',
+            data: { query: queryVal }
+        })
+    }
+
+  
+
+}
+
+module.exports = APIUtil;
+
+
+
+/***/ }),
+
 /***/ "./frontend/follow_toggle.js":
 /*!***********************************!*\
   !*** ./frontend/follow_toggle.js ***!
   \***********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js")
 
 class FollowToggle {
     constructor($el){
@@ -103,32 +149,54 @@ class FollowToggle {
     }
 
     render() {
-        if (this.followState === 'unfollowed') {
-            this.$el.text("Follow!")
-        } else {
-            this.$el.text('Unfollow!')
+        switch(this.followState) {
+            case 'unfollowed': 
+                this.$el.prop('disabled', false);
+                this.$el.text("Follow!");
+                break
+            case 'followed':
+                this.$el.prop('disabled', false);
+                this.$el.text('Unfollow!')
+                break
+            case 'following':
+                this.$el.prop('disabled', true);
+                this.$el.text('following')
+                break
+            case 'unfollowing':
+                this.$el.prop('disabled', true);
+                this.$el.text('unfollowing')
+                break
         };
     }
+    
 
     handleClick(e) {
+        const followToggle = this;
+
         e.preventDefault();
-        $.ajax({
-            url: "/users/:id/follow",
-            method: this.followState === 'unfollowed' ? "POST" : "DELETE",
-            dataType: 'json',
-            success: function() {
-                if (this.followState === 'unfollowed') {
-                    this.followState = 'followed'
-                } else {
-                    this.followState = 'unfollowed'
-                }
-                this.render()
-            }
-        }.bind(this)
-        )
-        
+        if (this.followState === 'unfollowed') {
+            this.followState = 'following';
+            this.render();
+            APIUtil.followUser(this.userId)
+            .then(()=> {
+                followToggle.followState = 'followed'
+                followToggle.render()
+            })
+ 
+        } else if (this.followState === 'followed') {
+            this.followState = 'unfollowing';
+            this.render();
+            APIUtil.unfollowUser(this.userId)
+            .then(()=> {
+                followToggle.followState = 'unfollowed'
+                followToggle.render()
+            })
+            
+        }
         
     }
+
+
     
     
 }
@@ -136,21 +204,6 @@ class FollowToggle {
 module.exports= FollowToggle;
 
 
-// if (this.followState === 'unfollowed') {
-//     $.ajax({
-//         url: "/users/:id/follow",
-//         method: 'POST'
-
-//     }.bind(this)
-//     )
-// } else {
-//      $.ajax({
-//         url: "/users/:id/follow",
-//         method: 'DELETE'
-
-//     }.bind(this)
-//     )
-// }
 
 /***/ }),
 
@@ -161,14 +214,70 @@ module.exports= FollowToggle;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js")
+const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
+const UsersSearch = __webpack_require__(/*! ./user_search */ "./frontend/user_search.js")
 
 $(() => {
-    $("button.follow-toggle").each(function() {
-        let button = new FollowToggle(this);
-        
+    const toggleBtns = $(".follow-toggle")
+    toggleBtns.each(function() {
+        let button = new FollowToggle($(this));
+    });
+
+
+    const usersSearch = $(".users-search")
+    usersSearch.each(function() {
+        let search = new UsersSearch($(this));
     });
 })
+
+/***/ }),
+
+/***/ "./frontend/user_search.js":
+/*!*********************************!*\
+  !*** ./frontend/user_search.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js")
+
+class UsersSearch {
+    constructor($el){
+        this.$el = $el;
+        this.$ul = this.$el.find('.users');
+        this.$input = this.$el.find('input[name=username]')
+        this.$el.on('input', this.handleInput.bind(this))
+    }
+
+    
+    handleInput(e) {
+        e.preventDefault()
+        APIUtil.searchUsers(this.$input.val())
+            .then( users => this.renderResult(users))
+        
+    }
+
+
+    renderResult(users){
+        this.$ul.empty();
+        
+        for (let index = 0; index < users.length; index++) {
+            const user = users[index];
+
+            let $a = $('<a></a>');
+            $a.text(`@${user.username}`);
+            $a.attr('href', `/users/${user.id}`);
+
+            const $li = $('<li></li>');
+            $li.append($a);
+            this.$ul.append($li);
+        }
+            
+    }
+
+}
+
+module.exports = UsersSearch;
 
 /***/ })
 

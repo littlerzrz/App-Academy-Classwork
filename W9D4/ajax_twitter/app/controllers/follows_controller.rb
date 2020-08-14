@@ -24,5 +24,10 @@ class FollowsController < ApplicationController
       format.html { redirect_to request.referrer }
       format.json { render json: @follow }
     end
+    
+
+
   end
 end
+
+
