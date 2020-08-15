@@ -114,13 +114,11 @@ const APIUtil = {
     searchUsers: queryVal => {
         return $.ajax({
             url: `/users/search`,
-            method: 'GET',
+            method: 'get',
             dataType: 'json',
             data: { query: queryVal }
         })
     }
-
-  
 
 }
 
@@ -140,9 +138,9 @@ module.exports = APIUtil;
 const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js")
 
 class FollowToggle {
-    constructor($el){
-        this.userId = $el.data("userId");
-        this.followState = $el.data("initialFollowState");
+    constructor($el, options){
+        this.userId = $el.data("userId") || options.userId;
+        this.followState = $el.data("initialFollowState") || options.followState;
         this.$el = $el;
         this.render();
         this.$el.on('click', this.handleClick.bind(this));
@@ -239,7 +237,8 @@ $(() => {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js")
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 
 class UsersSearch {
     constructor($el){
@@ -253,10 +252,8 @@ class UsersSearch {
     handleInput(e) {
         e.preventDefault()
         APIUtil.searchUsers(this.$input.val())
-            .then( users => this.renderResult(users))
-        
+            .then(users => this.renderResult(users))    
     }
-
 
     renderResult(users){
         this.$ul.empty();
@@ -268,8 +265,16 @@ class UsersSearch {
             $a.text(`@${user.username}`);
             $a.attr('href', `/users/${user.id}`);
 
+            const $toggleBtn = $('<button></button>');
+            
+            new FollowToggle($toggleBtn, {
+                userId: user.id,
+                followState: user.followed ? 'followed' : 'unfollowed'
+            });
+
             const $li = $('<li></li>');
             $li.append($a);
+            $li.append($toggleBtn)
             this.$ul.append($li);
         }
             
