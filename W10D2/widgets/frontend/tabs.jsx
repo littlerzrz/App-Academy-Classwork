@@ -11,42 +11,23 @@ class Tabs extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.props.children}</h1>
+        <h1>Tabs</h1>
+        <div className='tabs'>
+          <ul>
+            <h1>{this.props.panels[this.state.index].title}</h1>
+            <article>{this.props.panels[this.state.index].content}</article>
+          </ul>
+        </div>
       </div>
     );
   }
+  
+  handler(event) {
+    event.preventDafult();
+    this.setState({
+    })
+  }
 
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       selectedPane: 0,
-//     };
-//     this.selectTab = this.selectTab.bind(this);
-//   }
-
-//   selectTab(num) {
-//     this.setState({ selectedPane: num });
-//   }
-
-//   render() {
-//     const pane = this.props.panes[this.state.selectedPane];
-
-//     return (
-//       <div>
-//         <h1>Tabs</h1>
-//         <div className="tabs">
-//           <Headers
-//             selectedPane={this.state.selectedPane}
-//             onTabChosen={this.selectTab}
-//             panes={this.props.panes}
-//           ></Headers>
-//           <div className="tab-content">
-//             <article>{pane.content}</article>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
 }
 
 export default Tabs;

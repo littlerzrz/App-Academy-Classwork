@@ -13,7 +13,7 @@ function Root(){
     return(
         <div>
             <Clock/>
-            <Tabs panels={panels} />
+            <Tabs panels = {panels} />
         </div>
     )
 }
