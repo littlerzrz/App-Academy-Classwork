@@ -1,0 +1,41 @@
+body {
+	text-align: center;
+}
+#root {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* tiles */
+
+.tile {
+	height: 20px;
+	width: 20px;
+	background: lightgray;
+	float: left;
+	border-style: outset;
+	border-width: 2px;
+	line-height: 20px;
+	padding-left: 3px;
+	font-size: 14px;
+	font-weight: bold;
+	position: relative;
+	text-align: center;
+}
+
+
+/* board */
+.row {
+	width: 250px;
+	margin: 0 auto;
+}
+
+.explored {
+	border-style: inset;
+}
+
+.bombed, .flagged {
+	color:red;
+}

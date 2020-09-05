@@ -81,8 +81,10 @@ export class Board {
 
   onBoard(pos) {
     return (
-      pos[0] >= 0 && pos[0] < this.gridSize &&
-        pos[1] >= 0 && pos[1] < this.gridSize
+      pos[0] >= 0 &&
+      pos[0] < this.gridSize &&
+      pos[1] >= 0 &&
+      pos[1] < this.gridSize
     );
   }
 
@@ -102,8 +104,8 @@ export class Board {
 
   lost() {
     let lost = false;
-    this.grid.forEach(row => {
-      row.forEach(tile => {
+    this.grid.forEach((row) => {
+      row.forEach((tile) => {
         if (tile.bombed && tile.explored) {
           lost = true;
         }
@@ -114,8 +116,8 @@ export class Board {
 
   won() {
     let won = true;
-    this.grid.forEach(row => {
-      row.forEach(tile => {
+    this.grid.forEach((row) => {
+      row.forEach((tile) => {
         if (tile.flagged === tile.revealed || tile.flagged !== tile.bombed) {
           won = false;
         }
