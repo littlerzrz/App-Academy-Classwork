@@ -1,4 +1,5 @@
 import React from "react";
+import TodoForm from "./todo_form";
 
 import TodoListItem from "./todo_list_item";
 
@@ -14,8 +15,11 @@ export default class TodoList extends React.Component {
         })
 
         return (
-          <ul>{ content }</ul>
-        )
+          <div>
+            <TodoForm receiveTodo={this.props.receiveTodo} />
+            <ul>{content}</ul>
+          </div>
+        );
 
         
     }
