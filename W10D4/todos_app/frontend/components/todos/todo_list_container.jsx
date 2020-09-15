@@ -1,14 +1,15 @@
 import { connect } from "react-redux";
-import TodoList from "./todo_list"
-import TodoListItem from "./todo_list_item";
+import { removeTodo, receiveTodo } from "../../actions/todo_actions";
+import TodoList from "./todo_list";
+
 
 const mapStateToProps =(state) => ({
     todos: allTodos(state)
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     receiveTodo: todo => dispatch(receiveTodo(todo)),
-    removeTodo: index => dispatch(removeTodo(index))
+    removeTodo: id => dispatch(removeTodo(id))
 });
 
 export const TodoListContainer = connect(
@@ -16,7 +17,3 @@ export const TodoListContainer = connect(
   mapDispatchToProps
 )(TodoList);
 
-export const TodoListItemContainer =  connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TodoListItem)

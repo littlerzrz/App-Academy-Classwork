@@ -1,3 +1,8 @@
 export const allTodos = ({todos}) => {
-    return Object.keys(todos).map(id => todos[id])
+    return Object.values(todos)
+}
+
+export const stepsByTodoId = (state, todoId) => {
+    const steps = Object.values(state.steps)
+    return steps.filter(step => step.todoId === todoId)
 }

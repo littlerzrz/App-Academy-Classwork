@@ -8,9 +8,13 @@ import TodoListItem from "./todo_list_item";
 export default class TodoList extends React.Component {
     render(){
         const todosArr = this.props.todos;
+        const removeTodo = this.props.removeTodo;
+        const receiveTodo = this.props.receiveTodo;
         const content = todosArr.map((todo) => {
            return <TodoListItem todo={todo} 
                                 key={todo.id}
+                                removeTodo={removeTodo}
+                                receiveTodo={receiveTodo}
                     />
         })
 

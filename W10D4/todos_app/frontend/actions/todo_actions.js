@@ -13,7 +13,7 @@ export const receiveTodo = todo => ({
 })
 
 
-export const removeTodo = index => ({
+export const removeTodo = id => ({
     type: REMOVE_TODO,
-    index: index
+    id: id
 })
